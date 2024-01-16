@@ -1,4 +1,3 @@
-import { transparentize } from 'polished'
 import React, { useMemo } from 'react'
 import styled, {
   ThemeProvider as StyledComponentsThemeProvider,
@@ -6,7 +5,6 @@ import styled, {
   css,
   DefaultTheme
 } from 'styled-components'
-import { useIsDarkMode } from '../state/user/hooks'
 import { Text, TextProps } from 'rebass'
 import { Colors } from './styled'
 
@@ -48,9 +46,9 @@ export function colors(darkMode: boolean): Colors {
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
     // backgrounds / greys
-    bg1: darkMode ? '#212429' : '#FFFFFF',
+    bg1: darkMode ? 'rgb(17, 20, 12)' : '#FFFFFF',
     bg2: darkMode ? '#2C2F36' : '#F7F8FA',
-    bg3: darkMode ? '#40444F' : '#EDEEF2',
+    bg3: darkMode ? 'rgb(117, 131, 93)' : '#EDEEF2',
     bg4: darkMode ? '#565A69' : '#CED0D9',
     bg5: darkMode ? '#6C7284' : '#888D9B',
 
@@ -59,7 +57,7 @@ export function colors(darkMode: boolean): Colors {
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#ff007a',
+    primary1: darkMode ? 'rgb(252, 252, 3)' : '#ff007a',
     primary2: darkMode ? '#3680E7' : '#FF8CC3',
     primary3: darkMode ? '#4D8FEA' : '#FF99C9',
     primary4: darkMode ? '#376bad70' : '#F6DDE8',
@@ -115,7 +113,7 @@ export function theme(darkMode: boolean): DefaultTheme {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const darkMode = useIsDarkMode()
+  const darkMode = true
 
   const themeObject = useMemo(() => theme(darkMode), [darkMode])
 
@@ -169,14 +167,26 @@ export const TYPE = {
 }
 
 export const FixedGlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: "geomGraphic";
+    src: url('fonts/geomGraphicMedium.otf');
+    src: url('fonts/geomGraphicMedium.otf') format('embedded-opentype');
+    font-weight: 700;
+  }
+  
 html, input, textarea, button {
   font-family: 'Inter', sans-serif;
-  letter-spacing: -0.018em;
-  font-display: fallback;
+  //font-family: "geomGraphic";
+  //font-weight: 700;
+
+  //letter-spacing: -0.018em;
+  //font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
     font-family: 'Inter var', sans-serif;
+    //font-family: "geomGraphic";
+    //font-weight: 700;
   }
 }
 
@@ -184,6 +194,9 @@ html,
 body {
   margin: 0;
   padding: 0;
+  
+  
+
 }
 
 * {
@@ -206,17 +219,17 @@ html {
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg2};
+  //background-color: ${({ theme }) => theme.bg2};
+  background-image: linear-gradient(rgb(17, 20, 12) 27.54%, rgb(37, 43, 27));
+
 }
 
 body {
   min-height: 100vh;
   background-position: 0 -30vh;
   background-repeat: no-repeat;
-  background-image: ${({ theme }) =>
-    `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-      1,
-      theme.bg1
-    )} 100%)`};
+  
+
+  
 }
 `

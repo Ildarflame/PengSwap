@@ -40,7 +40,7 @@ const Base = styled(RebassButton)<{
 
 export const ButtonPrimary = styled(Base)`
   background-color: ${({ theme }) => theme.primary1};
-  color: white;
+  color: black;
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.primary1)};
     background-color: ${({ theme }) => darken(0.05, theme.primary1)};
@@ -59,6 +59,8 @@ export const ButtonPrimary = styled(Base)`
     box-shadow: none;
     border: 1px solid transparent;
     outline: none;
+    color: black;
+    
     opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.7' : '1')};
   }
 `
@@ -268,7 +270,7 @@ export function ButtonConfirmed({
 
 export function ButtonError({ error, ...rest }: { error?: boolean } & ButtonProps) {
   if (error) {
-    return <ButtonErrorStyle {...rest} />
+      return <ButtonErrorStyle {...rest} />
   } else {
     return <ButtonPrimary {...rest} />
   }

@@ -1,11 +1,11 @@
 import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@uniswap/sdk'
-import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
+import React, {CSSProperties, MutableRefObject, useCallback, useMemo} from 'react'
 import { FixedSizeList } from 'react-window'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 import { useActiveWeb3React } from '../../hooks'
 import { useSelectedTokenList, WrappedTokenInfo } from '../../state/lists/hooks'
-import { useAddUserToken, useRemoveUserAddedToken } from '../../state/user/hooks'
+import {  useRemoveUserAddedToken } from '../../state/user/hooks'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { LinkStyledButton, TYPE } from '../../theme'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
@@ -101,11 +101,10 @@ function CurrencyRow({
   const balance = useCurrencyBalance(account ?? undefined, currency)
 
   const removeToken = useRemoveUserAddedToken()
-  const addToken = useAddUserToken()
-
   // only show add or remove buttons if not on selected list
   return (
     <MenuItem
+
       style={style}
       className={`token-item-${key}`}
       onClick={() => (isSelected ? null : onSelect())}
@@ -131,19 +130,19 @@ function CurrencyRow({
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
-          {!isOnSelectedList && !customAdded ? (
-            <TYPE.main fontWeight={500}>
-              Found by address
-              <LinkStyledButton
-                onClick={event => {
-                  event.stopPropagation()
-                  if (currency instanceof Token) addToken(currency)
-                }}
-              >
-                (Add)
-              </LinkStyledButton>
-            </TYPE.main>
-          ) : null}
+          {/*{!isOnSelectedList && !customAdded ? (*/}
+          {/*  <TYPE.main fontWeight={500}>*/}
+          {/*    Found by address*/}
+          {/*    <LinkStyledButton*/}
+          {/*      onClick={event => {*/}
+          {/*        event.stopPropagation()*/}
+          {/*        if (currency instanceof Token) addToken(currency)*/}
+          {/*      }}*/}
+          {/*    >*/}
+          {/*      (Add)*/}
+          {/*    </LinkStyledButton>*/}
+          {/*  </TYPE.main>*/}
+          {/*) : null}*/}
         </FadedSpan>
       </Column>
       <TokenTags currency={currency} />
@@ -171,7 +170,7 @@ export default function CurrencyList({
   fixedListRef?: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
 }) {
-  const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
+  const itemData = useMemo(() => (showETH ? [...currencies] : currencies), [currencies, showETH])
 
   const Row = useCallback(
     ({ data, index, style }) => {
